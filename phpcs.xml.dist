@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<ruleset name="juanto">
+  <file>wp/wp-content/plugins/juanto-core</file>
+  <file>wp/wp-content/themes/juanto</file>
+  <exclude-pattern>*/build/*</exclude-pattern>
+  <exclude-pattern>*/node_modules/*</exclude-pattern>
+  <exclude-pattern>*/src/*.js</exclude-pattern>
+  <arg name="extensions" value="php"/>
+  <rule ref="WordPress">
+    <exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+  </rule>
+  <config name="minimum_wp_version" value="6.8"/>
+  <rule ref="WordPress.WP.I18n"><properties><property name="text_domain" type="array" value="juanto"/></properties></rule>
+</ruleset>

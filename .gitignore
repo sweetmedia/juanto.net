@@ -1,0 +1,24 @@
+# Track only our code; WordPress core, uploads and config stay out.
+/*
+!/.gitignore
+!/.nvmrc
+!/README.md
+!/LICENSE
+!/composer.json
+!/composer.lock
+!/phpcs.xml.dist
+!/phpunit.xml.dist
+!/tests/
+/tests/wp-tests-config.php
+!/wp/
+/wp/*
+!/wp/wp-content/
+/wp/wp-content/*
+!/wp/wp-content/plugins/
+/wp/wp-content/plugins/*
+!/wp/wp-content/plugins/juanto-core/
+/wp/wp-content/plugins/juanto-core/node_modules/
+!/wp/wp-content/themes/
+/wp/wp-content/themes/*
+!/wp/wp-content/themes/juanto/
+.DS_Store
