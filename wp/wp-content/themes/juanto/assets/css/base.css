@@ -54,6 +54,8 @@ body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; 
 	   unaligned child of the header group, which centers this small element instead of
 	   pinning it to the content column's left edge; override it back to flush-left. */
 	margin-left: 0 !important; margin-right: 0 !important; }
+/* The header group uses constrained layout, whose children get margin-inline: auto !important; pin the logo to the left edge like the menu is pinned right. */
+.juanto-header > .juanto-jp { margin-left: 0 !important; margin-right: 0 !important; }
 .juanto-header .wp-block-navigation { margin-left: auto !important; margin-right: 0 !important; font-family: var(--wp--preset--font-family--mono); font-size: 13px; }
 .juanto-header .wp-block-navigation-item a { color: var(--wp--preset--color--ink-3); }
 .juanto-header .wp-block-navigation-item.current-menu-item a, .juanto-header .wp-block-navigation-item a[aria-current] { color: var(--wp--preset--color--ink); }
