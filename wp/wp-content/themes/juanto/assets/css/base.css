@@ -48,7 +48,7 @@ body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; 
 .wp-site-blocks > header.wp-block-template-part .juanto-status { position: static; }
 .wp-site-blocks > header.wp-block-template-part .juanto-header { position: relative; top: auto; }
 
-.juanto-header { position: sticky; top: var(--juanto-bar); z-index: 30; display: flex; align-items: center; gap: 24px; height: 60px; background: oklch(97% 0.006 75 / .92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--wp--preset--color--rule); font-size: 13px; }
+.juanto-header { position: sticky; top: var(--juanto-bar); z-index: 30; display: flex; align-items: center; gap: 24px; height: 60px; background: oklch(97% 0.006 75 / .92); border-bottom: 1px solid var(--wp--preset--color--rule); font-size: 13px; }
 .juanto-jp { display: block; width: 44px; aspect-ratio: 1; background: var(--wp--preset--color--ink); -webkit-mask: url(../img/jp-logo.png) center / contain no-repeat; mask: url(../img/jp-logo.png) center / contain no-repeat;
 	/* WP's constrained-layout support forces margin-left/right:auto (!important) on every
 	   unaligned child of the header group, which centers this small element instead of
@@ -58,6 +58,11 @@ body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; 
 .juanto-header > .juanto-jp { margin-left: 0 !important; margin-right: 0 !important; }
 .juanto-header .wp-block-navigation { margin-left: auto !important; margin-right: 0 !important; font-family: var(--wp--preset--font-family--mono); font-size: 13px; }
 .juanto-header .wp-block-navigation-item a { color: var(--wp--preset--color--ink-3); }
+/* Menu items 22px apart (core default is 0.5em). No backdrop-filter on .juanto-header: it would make the header the containing block of the fixed mobile overlay and trap the open menu in a 60px strip. */
+.juanto-header .wp-block-navigation__container { gap: 22px; }
+.juanto-header .wp-block-navigation:not(.has-background) .wp-block-navigation__responsive-container.is-menu-open { background: var(--wp--preset--color--paper); color: var(--wp--preset--color--ink); }
+.juanto-header .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__container { gap: 18px; font-size: 18px; }
+.juanto-header .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation-item a { color: var(--wp--preset--color--ink); }
 .juanto-header .wp-block-navigation-item.current-menu-item a, .juanto-header .wp-block-navigation-item a[aria-current] { color: var(--wp--preset--color--ink); }
 .juanto-progress { position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--wp--preset--color--amber); transform-origin: 0 50%; transform: scaleX(0); }
 
