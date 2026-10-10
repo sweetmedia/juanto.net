@@ -11,6 +11,8 @@ import { useEntityProp } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { RowsEditor } from '../blocks/_shared/rows';
+import { TutorialPanel } from './tutorial-panel';
+import './code-filename';
 
 /**
  * The "Project" document sidebar panel.
@@ -103,3 +105,4 @@ function ProjectPanel() {
 	);
 }
 registerPlugin( 'juanto-project', { render: ProjectPanel } );
+registerPlugin( 'juanto-tutorial', { render: TutorialPanel } );

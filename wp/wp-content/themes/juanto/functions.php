@@ -46,6 +46,9 @@ function juanto_theme_enqueue(): void {
 	if ( is_post_type_archive( 'project' ) ) {
 		wp_enqueue_style( 'juanto-lab' );
 	}
+	if ( function_exists( 'juanto_is_tutorial' ) && ( ( is_singular( 'post' ) && juanto_is_tutorial( get_queried_object_id() ) ) || is_page( 'tutorials' ) ) ) {
+		wp_enqueue_style( 'juanto-tutorial' );
+	}
 }
 add_action( 'wp_enqueue_scripts', 'juanto_theme_enqueue' );
 
@@ -56,22 +59,27 @@ add_action( 'wp_enqueue_scripts', 'juanto_theme_enqueue' );
  * so a block's own rules win ties of equal specificity, wherever it renders.
  */
 const JUANTO_BLOCK_STYLES = [
-	'case-meta'     => [ 'juanto-base', 'juanto-case' ],
-	'case-toc'      => [ 'juanto-base', 'juanto-case' ],
-	'section-head'  => [ 'juanto-base', 'juanto-case' ],
-	'tldr'          => [ 'juanto-base', 'juanto-case' ],
-	'facts'         => [ 'juanto-base', 'juanto-case' ],
-	'figure-pair'   => [ 'juanto-base', 'juanto-case' ],
-	'reveal-image'  => [ 'juanto-base', 'juanto-case' ],
-	'decisions'     => [ 'juanto-base', 'juanto-case' ],
-	'ledger'        => [ 'juanto-base', 'juanto-case' ],
-	'swatches'      => [ 'juanto-base', 'juanto-case' ],
-	'type-specimen' => [ 'juanto-base', 'juanto-case' ],
-	'step-track'    => [ 'juanto-base', 'juanto-case' ],
-	'next-case'     => [ 'juanto-base', 'juanto-case' ],
-	'lab-stack'     => [ 'juanto-base', 'juanto-lab' ],
-	'project-list'  => [ 'juanto-base', 'juanto-case' ],
-	'lab-teaser'    => [ 'juanto-base', 'juanto-case' ],
+	'case-meta'         => [ 'juanto-base', 'juanto-case' ],
+	'case-toc'          => [ 'juanto-base', 'juanto-case' ],
+	'section-head'      => [ 'juanto-base', 'juanto-case' ],
+	'tldr'              => [ 'juanto-base', 'juanto-case' ],
+	'facts'             => [ 'juanto-base', 'juanto-case' ],
+	'figure-pair'       => [ 'juanto-base', 'juanto-case' ],
+	'reveal-image'      => [ 'juanto-base', 'juanto-case' ],
+	'decisions'         => [ 'juanto-base', 'juanto-case' ],
+	'ledger'            => [ 'juanto-base', 'juanto-case' ],
+	'swatches'          => [ 'juanto-base', 'juanto-case' ],
+	'type-specimen'     => [ 'juanto-base', 'juanto-case' ],
+	'step-track'        => [ 'juanto-base', 'juanto-case' ],
+	'next-case'         => [ 'juanto-base', 'juanto-case' ],
+	'lab-stack'         => [ 'juanto-base', 'juanto-lab' ],
+	'project-list'      => [ 'juanto-base', 'juanto-case' ],
+	'lab-teaser'        => [ 'juanto-base', 'juanto-case' ],
+	'tutorial-step'     => [ 'juanto-base', 'juanto-tutorial' ],
+	'callout'           => [ 'juanto-base', 'juanto-tutorial' ],
+	'tutorial-meta'     => [ 'juanto-base', 'juanto-tutorial' ],
+	'tutorial-cta'      => [ 'juanto-base', 'juanto-tutorial' ],
+	'related-tutorials' => [ 'juanto-base', 'juanto-tutorial' ],
 ];
 
 /**

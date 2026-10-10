@@ -22,6 +22,9 @@ define( 'JUANTO_CORE_URL', plugin_dir_url( __FILE__ ) );
 
 require_once JUANTO_CORE_DIR . 'includes/post-types.php';
 require_once JUANTO_CORE_DIR . 'includes/meta.php';
+require_once JUANTO_CORE_DIR . 'includes/tutorial.php';
+require_once JUANTO_CORE_DIR . 'includes/code.php';
+require_once JUANTO_CORE_DIR . 'includes/tutorial-migrate.php';
 require_once JUANTO_CORE_DIR . 'includes/format.php';
 require_once JUANTO_CORE_DIR . 'includes/settings.php';
 require_once JUANTO_CORE_DIR . 'includes/github.php';

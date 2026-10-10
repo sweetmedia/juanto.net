@@ -24,6 +24,7 @@ class SeoTest extends WP_UnitTestCase {
 		$this->assertSame( [ home_url( '/' ), 301 ], juanto_redirect_target( '/works' ) );
 		$this->assertSame( [ 'https://example.org/cv.pdf', 302 ], juanto_redirect_target( '/resume.pdf' ) );
 		$this->assertNull( juanto_redirect_target( '/lab/' ) );
+		$this->assertSame( [ home_url( '/tutorials/' ), 301 ], juanto_redirect_target( '/category/tutorials/' ) );
 	}
 
 	public function test_schema_person_on_front_and_creative_work_on_projects() {
@@ -157,5 +158,83 @@ class SeoTest extends WP_UnitTestCase {
 		$this->assertIsArray( $decoded, 'JSON-LD is valid JSON' );
 		$this->assertArrayHasKey( 'name', $decoded );
 		$this->assertSame( $malicious_title, $decoded['name'], 'Decoded name matches original (properly encoded in JSON)' );
+	}
+
+	private function seo_tutorial( string $content, array $meta = [] ): int {
+		juanto_seed_terms();
+		$id = self::factory()->post->create( [ 'post_title' => 'Force downloads', 'post_excerpt' => 'Make a button download a file.', 'post_content' => $content ] );
+		wp_set_post_categories( $id, [ get_category_by_slug( 'tutorials' )->term_id ] );
+		wp_set_object_terms( $id, 'en', 'language' );
+		foreach ( $meta as $key => $value ) {
+			update_post_meta( $id, "juanto_tut_{$key}", $value );
+		}
+		return $id;
+	}
+
+	public function test_tutorial_schema_is_a_techarticle_and_howto_graph() {
+		$step = static fn( string $t, string $p ) => '<!-- wp:juanto/tutorial-step {"title":"' . $t . '"} --><!-- wp:paragraph --><p>' . $p . '</p><!-- /wp:paragraph --><!-- /wp:juanto/tutorial-step -->';
+		$id   = $this->seo_tutorial( $step( 'Copy the URL', 'Open <b>Media</b>.' ) . $step( 'Edit the link', 'Paste it.' ), [ 'minutes' => 5, 'tools' => [ [ 'name' => 'Elementor Pro', 'version' => '' ], [ 'name' => 'WordPress', 'version' => '6.5' ] ] ] );
+		$this->go_to( get_permalink( $id ) );
+		$schema = juanto_schema();
+		$this->assertSame( 'https://schema.org', $schema['@context'] );
+		[ $article, $howto ] = $schema['@graph'];
+		$this->assertSame( 'TechArticle', $article['@type'] );
+		$this->assertSame( 'Force downloads', $article['headline'] );
+		$this->assertSame( 'en', $article['inLanguage'] );
+		$this->assertSame( 'Person', $article['author']['@type'] );
+		$this->assertSame( 'HowTo', $howto['@type'] );
+		$this->assertSame( 'PT5M', $howto['totalTime'] );
+		$this->assertSame( [ [ '@type' => 'HowToTool', 'name' => 'Elementor Pro' ], [ '@type' => 'HowToTool', 'name' => 'WordPress 6.5' ] ], $howto['tool'] );
+		$this->assertSame( get_permalink( $id ) . '#copy-the-url', $howto['step'][0]['url'] );
+		$this->assertSame( 'Open Media.', $howto['step'][0]['text'] );
+		$this->assertSame( 2, $howto['step'][1]['position'] );
+		$this->assertArrayNotHasKey( 'image', $howto['step'][0] );
+	}
+
+	public function test_tutorial_schema_text_has_no_html_entities() {
+		$step = static fn( string $t, string $p ) => '<!-- wp:juanto/tutorial-step {"title":"' . $t . '"} --><!-- wp:paragraph --><p>' . $p . '</p><!-- /wp:paragraph --><!-- /wp:juanto/tutorial-step -->';
+		$id   = $this->seo_tutorial( $step( 'Open it', 'Go to Media > Add New.' ) );
+		wp_update_post( [ 'ID' => $id, 'post_title' => "Here's how", 'post_excerpt' => '' ] );
+		$this->go_to( get_permalink( $id ) );
+		[ $article, $howto ] = juanto_schema()['@graph'];
+		$this->assertSame( 'Here’s how', $article['headline'] );
+		$this->assertSame( 'Here’s how', $howto['name'] );
+		$this->assertSame( 'Go to Media > Add New.', $howto['step'][0]['text'] );
+		$this->assertArrayNotHasKey( 'description', $article, 'no manual excerpt, no description' );
+		$json = wp_json_encode( juanto_schema() );
+		$this->assertStringNotContainsString( '&#', $json );
+		$this->assertStringNotContainsString( '&hellip;', $json );
+		$this->assertStringNotContainsString( '[…]', $json );
+		wp_update_post( [ 'ID' => $id, 'post_excerpt' => 'Don\'t panic &amp; read on.' ] );
+		clean_post_cache( $id );
+		$this->go_to( get_permalink( $id ) );
+		$this->assertSame( "Don't panic & read on.", juanto_schema()['@graph'][0]['description'] );
+	}
+
+	public function test_password_protected_tutorial_schema_leaks_no_steps_or_description() {
+		$step = static fn( string $t, string $p ) => '<!-- wp:juanto/tutorial-step {"title":"' . $t . '"} --><!-- wp:paragraph --><p>' . $p . '</p><!-- /wp:paragraph --><!-- /wp:juanto/tutorial-step -->';
+		$id   = $this->seo_tutorial( $step( 'Secret step', 'Secret text.' ) );
+		wp_update_post( [ 'ID' => $id, 'post_password' => 'hunter2' ] );
+		$this->go_to( get_permalink( $id ) );
+		$graph = juanto_schema()['@graph'];
+		$this->assertCount( 1, $graph );
+		$this->assertSame( 'TechArticle', $graph[0]['@type'] );
+		$this->assertArrayNotHasKey( 'description', $graph[0] );
+		$this->assertStringNotContainsString( 'Secret', wp_json_encode( $graph ) );
+	}
+
+	public function test_empty_fields_are_omitted_and_no_steps_means_no_howto() {
+		$id = $this->seo_tutorial( '<!-- wp:paragraph --><p>Draft.</p><!-- /wp:paragraph -->' );
+		$this->go_to( get_permalink( $id ) );
+		$schema = juanto_schema();
+		$this->assertCount( 1, $schema['@graph'] );
+		$this->assertArrayNotHasKey( 'image', $schema['@graph'][0] );
+	}
+
+	public function test_og_image_falls_back_to_the_result_image() {
+		$img = self::factory()->attachment->create_upload_object( DIR_TESTDATA . '/images/canola.jpg' );
+		$id  = $this->seo_tutorial( '', [ 'result_image' => $img ] );
+		$this->go_to( get_permalink( $id ) );
+		$this->assertSame( wp_get_attachment_image_url( $img, 'large' ), juanto_og_tags()['og:image'] );
 	}
 }

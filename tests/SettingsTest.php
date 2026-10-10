@@ -34,4 +34,10 @@ class SettingsTest extends WP_UnitTestCase {
 		$this->assertSame( 'KinPop', $s['project'] );
 		$this->assertSame( 10, $s['milestone_total'] );
 	}
+
+	public function test_sweetmedia_url_accepts_http_links_only() {
+		$this->assertSame( 'https://sweetmedia.net', juanto_sanitize_status( [ 'sweetmedia_url' => 'https://sweetmedia.net' ] )['sweetmedia_url'] );
+		$this->assertSame( '', juanto_sanitize_status( [ 'sweetmedia_url' => 'javascript:alert(1)' ] )['sweetmedia_url'] );
+		$this->assertSame( '', juanto_status_defaults()['sweetmedia_url'] );
+	}
 }

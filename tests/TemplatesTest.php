@@ -124,4 +124,54 @@ class TemplatesTest extends WP_UnitTestCase {
 			$this->assertArrayHasKey( $handle, wp_styles()->registered, $handle );
 		}
 	}
+
+	public function test_tutorials_prefer_the_tutorial_template() {
+		juanto_seed_terms();
+		$id = self::factory()->post->create();
+		wp_set_post_categories( $id, [ get_category_by_slug( 'tutorials' )->term_id ] );
+		$this->go_to( get_permalink( $id ) );
+		$this->assertSame( 'single-tutorial.php', apply_filters( 'single_template_hierarchy', [ 'single-post.php', 'single.php' ] )[0] );
+	}
+
+	public function test_tutorial_template_is_wired() {
+		$tpl = get_block_template( 'juanto//single-tutorial' );
+		$this->assertNotNull( $tpl );
+		foreach ( [ '"variant":"badge"', 'juanto/lang-badge', 'wp:post-title', 'juanto-tutorial__lede', 'wp:juanto/tutorial-meta /', '"source":"tutorial-step"', 'wp:post-content', 'juanto/tutorial-cta', 'juanto/related-tutorials' ] as $needle ) {
+			$this->assertStringContainsString( $needle, $tpl->content, $needle );
+		}
+	}
+
+	public function test_tutorial_starter_pattern_is_offered_for_new_posts() {
+		$pattern = WP_Block_Patterns_Registry::get_instance()->get_registered( 'juanto/tutorial-starter' );
+		$this->assertNotNull( $pattern );
+		$this->assertContains( 'core/post-content', $pattern['blockTypes'] );
+		$this->assertContains( 'post', $pattern['postTypes'] );
+		$this->assertSame( 3, substr_count( $pattern['content'], '<!-- wp:juanto/tutorial-step' ) );
+		$this->assertStringContainsString( 'wp:juanto/callout', $pattern['content'] );
+		$this->assertStringContainsString( 'Troubleshooting', $pattern['content'] );
+		$this->assertStringNotContainsString( '—', $pattern['content'] );
+	}
+
+	public function test_hub_lists_only_tutorials() {
+		juanto_seed_terms();
+		$tut = self::factory()->post->create( [ 'post_title' => 'A tutorial title' ] );
+		wp_set_post_categories( $tut, [ get_category_by_slug( 'tutorials' )->term_id ] );
+		self::factory()->post->create( [ 'post_title' => 'An essay title' ] );
+		$tpl = get_block_template( 'juanto//page-tutorials' );
+		$this->assertNotNull( $tpl );
+		$html = do_blocks( $tpl->content );
+		$this->assertStringContainsString( 'A tutorial title', $html );
+		$this->assertStringNotContainsString( 'An essay title', $html );
+		$this->assertStringContainsString( 'Step-by-step guides from client work and my own builds.', $html );
+	}
+
+	public function test_writing_index_marks_tutorials_and_links_the_hub() {
+		$tpl = get_block_template( 'juanto//home' );
+		$this->assertStringContainsString( '"variant":"badge"', $tpl->content );
+		$this->assertStringContainsString( 'href="/tutorials/"', $tpl->content );
+	}
+
+	public function test_footer_links_the_hub() {
+		$this->assertStringContainsString( home_url( '/tutorials/' ), do_blocks( '<!-- wp:pattern {"slug":"juanto/footer-contact"} /-->' ) );
+	}
 }

@@ -4,9 +4,18 @@
   "name": "juanto/case-toc",
   "title": "Case study contents",
   "category": "text",
-  "description": "Table of contents built from the case study's Section head blocks.",
+  "description": "Table of contents built from Section head blocks, or from tutorial steps.",
   "textdomain": "juanto",
-  "attributes": {},
+  "attributes": {
+    "source": {
+      "type": "string",
+      "enum": [
+        "section-head",
+        "tutorial-step"
+      ],
+      "default": "section-head"
+    }
+  },
   "usesContext": [
     "postId"
   ],

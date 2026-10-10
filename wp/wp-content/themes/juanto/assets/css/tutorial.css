@@ -1,1 +1,19 @@
-/* Tutorial single (single-tutorial.html) and hub (page-tutorials.html). Filled in Task 11. */
+/* Tutorial single (single-tutorial.html, direction C: one 720px column) and hub (page-tutorials.html) */
+.juanto-tutorial { padding-top: 64px; padding-bottom: 88px; }
+.juanto-tutorial .juanto-tutorial__kicker { gap: 10px; margin-top: 0; }
+.juanto-tutorial__kicker .wp-block-post-date { margin: 0; }
+.juanto-tutorial > .wp-block-post-title { margin-top: 16px; text-wrap: balance; }
+.juanto-tutorial .juanto-tutorial__lede { margin-top: 16px; color: var(--wp--preset--color--ink-2); }
+.juanto-tutorial__lede p { margin: 0; }
+.juanto-tutorial .juanto-tutorial__content { margin-top: 40px; }
+.juanto-tutorial__content > * { margin-block: 0; }
+.juanto-tutorial__content > * + * { margin-top: 24px; }
+.juanto-tutorial__content > p, .juanto-step__body > p { font-size: 17px; line-height: 1.65; color: var(--wp--preset--color--ink-2); }
+.juanto-tutorial__content > h2 { margin-top: 56px; font-size: var(--wp--preset--font-size--title); }
+.juanto-tutorial__content > .wp-block-details { padding: 14px 0; border-top: 1px solid var(--wp--preset--color--rule); }
+.juanto-tutorial__content > .wp-block-details + .wp-block-details { margin-top: 0; }
+.juanto-tutorial__content > .wp-block-details summary { font-weight: 700; cursor: pointer; }
+
+/* Hub */
+.juanto-tutorials__intro { margin-top: 12px; color: var(--wp--preset--color--ink-2); }
+.juanto-tutorial-row { row-gap: 6px; }

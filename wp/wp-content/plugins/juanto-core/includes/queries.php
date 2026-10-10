@@ -52,3 +52,61 @@ function juanto_next_case( int $post_id ): ?WP_Post {
 	}
 	return get_post( $ids[ ( $at + 1 ) % count( $ids ) ] );
 }
+
+/**
+ * Lower-cased tool names of a tutorial.
+ *
+ * @param int $post_id Post ID.
+ * @return string[]
+ */
+function juanto_tutorial_tool_names( int $post_id ): array {
+	return array_map( static fn( array $t ) => strtolower( $t['name'] ), juanto_get_tutorial( $post_id )['tools'] );
+}
+
+/**
+ * Other published tutorials: those sharing a tool first, then the newest.
+ *
+ * @param int $post_id Current tutorial.
+ * @param int $limit   How many.
+ * @return WP_Post[]
+ */
+function juanto_related_tutorials( int $post_id, int $limit = 3 ): array {
+	$posts  = get_posts(
+		[
+			'post_type'        => 'post',
+			'post_status'      => 'publish',
+			'category_name'    => 'tutorials',
+			'post__not_in'     => [ $post_id ],
+			'posts_per_page'   => 50,
+			'orderby'          => 'date',
+			'order'            => 'DESC',
+			'no_found_rows'    => true,
+			'suppress_filters' => false,
+		]
+	);
+	$mine   = juanto_tutorial_tool_names( $post_id );
+	$shared = [];
+	$rest   = [];
+	foreach ( $posts as $candidate ) {
+		if ( $mine && array_intersect( $mine, juanto_tutorial_tool_names( $candidate->ID ) ) ) {
+			$shared[] = $candidate;
+		} else {
+			$rest[] = $candidate;
+		}
+	}
+	return array_slice( array_merge( $shared, $rest ), 0, $limit );
+}
+
+// A Query Loop whose "query" attribute carries "juantoTutorials": true lists tutorials only.
+// Category IDs differ between environments, so templates cannot hard-code taxQuery.
+add_filter(
+	'query_loop_block_query_vars',
+	static function ( array $query, WP_Block $block ): array {
+		if ( ! empty( $block->context['query']['juantoTutorials'] ) ) {
+			$query['category_name'] = 'tutorials';
+		}
+		return $query;
+	},
+	10,
+	2
+);

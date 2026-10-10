@@ -22,6 +22,7 @@ function juanto_status_defaults(): array {
 		'contact_email'     => '',
 		'github_url'        => '',
 		'linkedin_url'      => '',
+		'sweetmedia_url'    => '',
 	];
 }
 
@@ -48,6 +49,7 @@ function juanto_sanitize_status( $input ): array {
 		'contact_email'     => sanitize_email( (string) ( $in['contact_email'] ?? '' ) ),
 		'github_url'        => esc_url_raw( (string) ( $in['github_url'] ?? '' ), [ 'https' ] ),
 		'linkedin_url'      => esc_url_raw( (string) ( $in['linkedin_url'] ?? '' ), [ 'https' ] ),
+		'sweetmedia_url'    => esc_url_raw( (string) ( $in['sweetmedia_url'] ?? '' ), [ 'http', 'https' ] ),
 	];
 }
 
@@ -90,6 +92,7 @@ function juanto_render_settings_page(): void {
 		'contact_email'     => [ __( 'Contact email (footer)', 'juanto' ), 'email' ],
 		'github_url'        => [ __( 'GitHub profile URL', 'juanto' ), 'url' ],
 		'linkedin_url'      => [ __( 'LinkedIn profile URL', 'juanto' ), 'url' ],
+		'sweetmedia_url'    => [ __( 'Sweet Media URL (tutorial call to action)', 'juanto' ), 'url' ],
 	];
 	echo '<div class="wrap"><h1>juanto</h1><form method="post" action="options.php">';
 	settings_fields( 'juanto' );

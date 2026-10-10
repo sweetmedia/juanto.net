@@ -77,4 +77,11 @@ function juanto_seed_terms(): void {
 			}
 		}
 	}
+
+	if ( ! term_exists( 'tutorials', 'category' ) ) {
+		$result = wp_insert_term( 'Tutorials', 'category', [ 'slug' => 'tutorials' ] );
+		if ( is_wp_error( $result ) && defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+			error_log( sprintf( 'juanto_seed_terms: could not create category/tutorials: %s', $result->get_error_message() ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- surfaces seeding failures in debug logs.
+		}
+	}
 }

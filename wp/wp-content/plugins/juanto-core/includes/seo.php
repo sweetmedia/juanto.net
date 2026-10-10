@@ -15,6 +15,9 @@ function juanto_redirect_target( string $path ): ?array {
 	if ( '/works' === $path ) {
 		return [ home_url( '/' ), 301 ];
 	}
+	if ( '/category/tutorials' === $path ) {
+		return [ home_url( '/tutorials/' ), 301 ];
+	}
 	if ( '/resume.pdf' === $path ) {
 		$url = juanto_get_status()['resume_url'];
 		return $url ? [ $url, 302 ] : null;
@@ -69,7 +72,82 @@ function juanto_schema(): ?array {
 		}
 		return $work;
 	}
+	if ( is_singular( 'post' ) && juanto_is_tutorial( get_queried_object_id() ) ) {
+		return juanto_tutorial_schema( get_queried_object_id(), $person );
+	}
 	return null;
+}
+
+/**
+ * Plain text for JSON-LD: tags stripped, HTML entities (texturized quotes,
+ * &gt;, &hellip;) decoded to real characters, trimmed.
+ *
+ * @param string $text Possibly marked-up text.
+ */
+function juanto_schema_text( string $text ): string {
+	return trim( html_entity_decode( wp_strip_all_tags( $text ), ENT_QUOTES | ENT_HTML5, 'UTF-8' ) );
+}
+
+/**
+ * TechArticle + HowTo graph for a tutorial. Empty values are omitted; a
+ * tutorial without steps gets no HowTo (one without steps is invalid), and a
+ * password-protected one gets neither HowTo nor a description (no content leaks).
+ * The description is the manual excerpt only; without one it is omitted.
+ *
+ * @param int   $post_id Tutorial.
+ * @param array $person  The site's Person node.
+ */
+function juanto_tutorial_schema( int $post_id, array $person ): array {
+	$keep  = static fn( array $node ): array => array_filter( $node, static fn( $v ) => '' !== $v && [] !== $v && 0 !== $v );
+	$tut   = juanto_get_tutorial( $post_id );
+	$url   = get_permalink( $post_id );
+	$title = juanto_schema_text( get_the_title( $post_id ) );
+	$post  = get_post( $post_id );
+	$lock  = post_password_required( $post );
+	$image = has_post_thumbnail( $post_id ) ? (string) get_the_post_thumbnail_url( $post_id, 'large' ) : ( $tut['result_image'] ? (string) wp_get_attachment_image_url( $tut['result_image'], 'large' ) : '' );
+	$graph = [
+		$keep(
+			[
+				'@type'         => 'TechArticle',
+				'@id'           => $url . '#article',
+				'url'           => $url,
+				'headline'      => $title,
+				'description'   => ( ! $lock && $post && has_excerpt( $post ) ) ? juanto_schema_text( $post->post_excerpt ) : '',
+				'author'        => $person,
+				'inLanguage'    => juanto_post_lang( $post_id ),
+				'datePublished' => (string) get_the_date( 'c', $post_id ),
+				'dateModified'  => (string) get_the_modified_date( 'c', $post_id ),
+				'image'         => $image,
+			]
+		),
+	];
+	$steps = $lock ? [] : juanto_tutorial_steps( $post_id );
+	if ( $steps ) {
+		$graph[] = $keep(
+			[
+				'@type'     => 'HowTo',
+				'@id'       => $url . '#howto',
+				'name'      => $title,
+				'totalTime' => $tut['minutes'] > 0 ? 'PT' . $tut['minutes'] . 'M' : '',
+				'image'     => $image,
+				'tool'      => array_map( static fn( array $t ) => [ '@type' => 'HowToTool', 'name' => trim( $t['name'] . ' ' . $t['version'] ) ], $tut['tools'] ),
+				'step'      => array_map(
+					static fn( array $s ) => $keep(
+						[
+							'@type'    => 'HowToStep',
+							'position' => $s['n'],
+							'name'     => '' !== $s['title'] ? juanto_schema_text( $s['title'] ) : 'Step ' . $s['n'],
+							'url'      => $url . '#' . $s['anchor'],
+							'text'     => juanto_schema_text( $s['text'] ),
+							'image'    => $s['image_id'] ? (string) wp_get_attachment_image_url( $s['image_id'], 'large' ) : '',
+						]
+					),
+					$steps
+				),
+			]
+		);
+	}
+	return [ '@context' => 'https://schema.org', '@graph' => $graph ];
 }
 
 /**
@@ -87,7 +165,8 @@ function juanto_og_tags(): array {
 		if ( has_post_thumbnail( $id ) ) {
 			$tags['og:image'] = get_the_post_thumbnail_url( $id, 'large' );
 		} else {
-			$default_image = (string) apply_filters( 'juanto_default_og_image', '' );
+			$result_image  = juanto_is_tutorial( $id ) ? juanto_get_tutorial( $id )['result_image'] : 0;
+			$default_image = $result_image ? (string) wp_get_attachment_image_url( $result_image, 'large' ) : (string) apply_filters( 'juanto_default_og_image', '' );
 			if ( '' !== $default_image ) {
 				$tags['og:image'] = $default_image;
 			}

@@ -12,7 +12,7 @@ $contact = function_exists( 'juanto_get_status' ) ? juanto_get_status() : [];
 ?>
 <!-- wp:html -->
 <div class="juanto-footer alignwide">
-	<div><h2><?php echo esc_html__( 'Hiring, or have a project?', 'juanto' ); ?></h2><p><?php echo esc_html__( "Tell me what you're building.", 'juanto' ); ?></p></div>
+	<div><h2><?php echo esc_html__( 'Hiring, or have a project?', 'juanto' ); ?></h2><p><?php echo esc_html__( "Tell me what you're building.", 'juanto' ); ?></p><p class="juanto-footer__more"><a class="juanto-link" href="<?php echo esc_url( home_url( '/tutorials/' ) ); ?>"><?php echo esc_html__( 'Tutorials', 'juanto' ); ?></a></p></div>
 	<div class="juanto-footer__btns">
 		<?php if ( ! empty( $contact['contact_email'] ) ) : ?>
 			<a class="juanto-btn is-primary" href="<?php echo esc_url( 'mailto:' . $contact['contact_email'] ); ?>"><?php echo esc_html__( 'Email me', 'juanto' ); ?></a>

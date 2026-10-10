@@ -1,14 +1,24 @@
 <!-- wp:template-part {"slug":"header","area":"header"} /-->
 <!-- wp:group {"tagName":"main","style":{"spacing":{"padding":{"top":"var:preset|spacing|section"}}},"layout":{"type":"constrained","contentSize":"820px"}} -->
 <main class="wp-block-group">
+<!-- wp:group {"className":"juanto-writing-head","layout":{"type":"flex","justifyContent":"space-between","verticalAlignment":"bottom","flexWrap":"wrap"}} -->
+<div class="wp-block-group juanto-writing-head">
 <!-- wp:heading {"level":1,"fontSize":"display"} --><h1 class="wp-block-heading has-display-font-size">Writing</h1><!-- /wp:heading -->
+<!-- wp:paragraph --><p><a class="juanto-link" href="/tutorials/">Tutorials →</a></p><!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
 <!-- wp:query {"queryId":1,"query":{"perPage":20,"postType":"post","inherit":true}} -->
 <div class="wp-block-query">
 <!-- wp:post-template {"className":"juanto-posts"} -->
 <!-- wp:group {"className":"juanto-post-row","layout":{"type":"flex","justifyContent":"space-between","flexWrap":"nowrap"}} -->
 <div class="wp-block-group juanto-post-row">
 <!-- wp:post-title {"isLink":true,"level":2,"fontSize":"title"} /-->
+<!-- wp:group {"className":"juanto-post-row__tags","layout":{"type":"flex","flexWrap":"nowrap"}} -->
+<div class="wp-block-group juanto-post-row__tags">
+<!-- wp:juanto/tutorial-meta {"variant":"badge"} /-->
 <!-- wp:juanto/lang-badge /-->
+</div>
+<!-- /wp:group -->
 </div>
 <!-- /wp:group -->
 <!-- /wp:post-template -->
