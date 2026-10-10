@@ -1,0 +1,22 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "juanto/step-track",
+	"title": "Step track",
+	"category": "text",
+	"description": "Animated multi-step track with failed attempts and a bracket.",
+	"textdomain": "juanto",
+	"attributes": {
+		"caption": { "type": "string", "default": "" },
+		"steps": { "type": "integer", "default": 15 },
+		"fails": { "type": "array", "default": [] },
+		"bracketFrom": { "type": "integer", "default": 0 },
+		"bracketTo": { "type": "integer", "default": 0 },
+		"bracketLabel": { "type": "string", "default": "" },
+		"foot": { "type": "array", "default": [] }
+	},
+	"supports": { "html": false },
+	"editorScript": "file:./index.js",
+	"viewScript": "file:./view.js",
+	"render": "file:./render.php"
+}

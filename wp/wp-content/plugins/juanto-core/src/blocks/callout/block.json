@@ -1,0 +1,13 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "juanto/callout",
+	"title": "Callout",
+	"category": "text",
+	"description": "A tip, note or warning inside a tutorial.",
+	"textdomain": "juanto",
+	"attributes": { "variant": { "type": "string", "enum": [ "tip", "note", "warning" ], "default": "tip" } },
+	"supports": { "html": false },
+	"editorScript": "file:./index.js",
+	"render": "file:./render.php"
+}

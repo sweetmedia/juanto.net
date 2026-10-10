@@ -1,0 +1,20 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "juanto/type-specimen",
+  "title": "Type specimen",
+  "category": "text",
+  "description": "Self-hosted type specimens for client typefaces.",
+  "textdomain": "juanto",
+  "attributes": {
+    "rows": {
+      "type": "array",
+      "default": []
+    }
+  },
+  "supports": {
+    "html": false
+  },
+  "editorScript": "file:./index.js",
+  "render": "file:./render.php"
+}

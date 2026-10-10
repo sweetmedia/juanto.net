@@ -1,0 +1,14 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "juanto/lang-badge",
+	"title": "Language badge",
+	"category": "text",
+	"description": "Shows the post's language (EN or ES) as a small badge.",
+	"textdomain": "juanto",
+	"attributes": {},
+	"usesContext": [ "postId" ],
+	"supports": { "html": false },
+	"editorScript": "file:./index.js",
+	"render": "file:./render.php"
+}

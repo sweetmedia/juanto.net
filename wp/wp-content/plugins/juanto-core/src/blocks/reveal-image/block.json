@@ -1,0 +1,18 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "juanto/reveal-image",
+	"title": "Reveal image",
+	"category": "text",
+	"description": "An image that reveals itself once it scrolls into view.",
+	"textdomain": "juanto",
+	"attributes": {
+		"id": { "type": "integer", "default": 0 },
+		"caption": { "type": "string", "default": "" },
+		"size": { "type": "string", "default": "large" }
+	},
+	"supports": { "html": false },
+	"editorScript": "file:./index.js",
+	"viewScript": "file:./view.js",
+	"render": "file:./render.php"
+}

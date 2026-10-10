@@ -1,0 +1,23 @@
+<!-- wp:template-part {"slug":"header","area":"header"} /-->
+<!-- wp:group {"tagName":"main","className":"juanto-tutorials","style":{"spacing":{"padding":{"top":"var:preset|spacing|section"}}},"layout":{"type":"constrained","contentSize":"820px"}} -->
+<main class="wp-block-group juanto-tutorials">
+<!-- wp:heading {"level":1,"fontSize":"display"} --><h1 class="wp-block-heading has-display-font-size">Tutorials</h1><!-- /wp:heading -->
+<!-- wp:paragraph {"className":"juanto-tutorials__intro","fontSize":"lede"} --><p class="juanto-tutorials__intro has-lede-font-size">Step-by-step guides from client work and my own builds.</p><!-- /wp:paragraph -->
+<!-- wp:query {"queryId":2,"query":{"perPage":20,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","inherit":false,"juantoTutorials":true}} -->
+<div class="wp-block-query">
+<!-- wp:post-template {"className":"juanto-posts"} -->
+<!-- wp:group {"className":"juanto-post-row juanto-tutorial-row","layout":{"type":"flex","justifyContent":"space-between","flexWrap":"wrap"}} -->
+<div class="wp-block-group juanto-post-row juanto-tutorial-row">
+<!-- wp:post-title {"isLink":true,"level":2,"fontSize":"title"} /-->
+<!-- wp:juanto/lang-badge /-->
+<!-- wp:juanto/tutorial-meta {"variant":"row"} /-->
+</div>
+<!-- /wp:group -->
+<!-- /wp:post-template -->
+<!-- wp:query-pagination --><!-- wp:query-pagination-previous /--><!-- wp:query-pagination-next /--><!-- /wp:query-pagination -->
+<!-- wp:query-no-results --><!-- wp:paragraph --><p>No tutorials yet.</p><!-- /wp:paragraph --><!-- /wp:query-no-results -->
+</div>
+<!-- /wp:query -->
+</main>
+<!-- /wp:group -->
+<!-- wp:template-part {"slug":"footer","area":"footer"} /-->

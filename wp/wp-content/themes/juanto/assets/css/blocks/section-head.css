@@ -1,0 +1,5 @@
+/* Section head (juanto/section-head) */
+.juanto-section-head { margin-top: 96px !important; scroll-margin-top: calc(var(--juanto-bar) + 84px); }
+.juanto-case__content > .juanto-section-head:first-child { margin-top: 0 !important; }
+.juanto-section-head__num { margin: 0; color: var(--juanto-amber-text); }
+.juanto-section-head__title { margin: 12px 0 0; font-size: clamp(1.9rem, 3.4vw, 2.5rem); max-width: 20ch; }

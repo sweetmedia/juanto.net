@@ -8,7 +8,15 @@
   <arg name="extensions" value="php"/>
   <rule ref="WordPress">
     <exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+    <exclude name="Universal.Arrays.DisallowShortArraySyntax"/>
+    <exclude name="WordPress.Arrays.ArrayDeclarationSpacing.AssociativeArrayFound"/>
   </rule>
   <config name="minimum_wp_version" value="6.8"/>
-  <rule ref="WordPress.WP.I18n"><properties><property name="text_domain" type="array" value="juanto"/></properties></rule>
+  <rule ref="WordPress.WP.I18n">
+    <properties>
+      <property name="text_domain" type="array">
+        <element value="juanto"/>
+      </property>
+    </properties>
+  </rule>
 </ruleset>

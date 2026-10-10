@@ -1,0 +1,27 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "juanto/project-list",
+	"title": "Project list",
+	"category": "text",
+	"description": "Homepage rows (case studies) or two columns (project cards), with a spring-following preview on rows.",
+	"textdomain": "juanto",
+	"attributes": {
+		"tier": {
+			"type": "string",
+			"enum": [ "case", "card" ],
+			"default": "case"
+		},
+		"layout": {
+			"type": "string",
+			"enum": [ "rows", "columns" ],
+			"default": "rows"
+		},
+		"limit": { "type": "integer", "default": -1 },
+		"label": { "type": "string", "default": "selected work" }
+	},
+	"supports": { "html": false },
+	"editorScript": "file:./index.js",
+	"viewScript": "file:./view.js",
+	"render": "file:./render.php"
+}

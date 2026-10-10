@@ -1,0 +1,10 @@
+/* Ledger (juanto/ledger) */
+.juanto-ledger { max-width: 72ch; border-top: 1px solid var(--wp--preset--color--ink); }
+.juanto-ledger__row { display: grid; grid-template-columns: 150px 1fr; gap: 20px; align-items: baseline; padding: 16px 0; border-bottom: 1px solid var(--wp--preset--color--rule); }
+.juanto-ledger__value { font: 500 22px/1.2 var(--wp--preset--font-family--mono); letter-spacing: -0.02em; }
+.juanto-ledger__row p { margin: 0; font-size: 15px; line-height: 1.55; color: var(--wp--preset--color--ink-2); }
+.juanto-ledger__row.is-next .juanto-ledger__value { color: var(--juanto-amber-text); font-size: 15px; }
+
+@media (max-width: 860px) {
+	.juanto-ledger__row { grid-template-columns: 1fr; gap: 4px; }
+}

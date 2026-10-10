@@ -1,0 +1,8 @@
+/* Type specimen (juanto/type-specimen) */
+.juanto-type-specimen { border-top: 1px solid var(--wp--preset--color--rule); }
+.juanto-type-specimen > div { display: grid; grid-template-columns: 170px 1fr; gap: 16px; align-items: baseline; padding: 16px 0; border-bottom: 1px solid var(--wp--preset--color--rule); }
+.juanto-type-specimen__sample { font-size: clamp(18px, 2.4vw, 30px); }
+
+@media (max-width: 860px) {
+	.juanto-type-specimen > div { grid-template-columns: 1fr; gap: 4px; }
+}

@@ -1,0 +1,26 @@
+/* Lab teaser: fan of three prints linking to /lab/ (juanto/lab-teaser) */
+.juanto-lab-teaser { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 40px; align-items: center; padding-top: 28px; }
+.juanto-lab-teaser__fan { position: relative; height: 210px; }
+.juanto-lab-teaser__fan img { position: absolute; left: 40px; top: 18px; width: 170px; height: 170px; object-fit: cover; border-radius: 6px; background: var(--wp--preset--color--card); box-shadow: var(--juanto-shadow-object); transition: transform 260ms var(--juanto-ease-out); }
+.juanto-lab-teaser__fan img.is-contain { object-fit: contain; padding: 18px; }
+.juanto-lab-teaser__fan img:nth-child(1) { transform: rotate(-9deg) translateX(-26px); }
+.juanto-lab-teaser__fan img:nth-child(2) { transform: rotate(5deg) translateX(24px); }
+.juanto-lab-teaser__fan img:nth-child(3) { transform: rotate(-1deg); }
+@media (hover: hover) and (pointer: fine) {
+	.juanto-lab-teaser:hover img:nth-child(1) { transform: rotate(-14deg) translateX(-48px); }
+	.juanto-lab-teaser:hover img:nth-child(2) { transform: rotate(10deg) translateX(46px); }
+	.juanto-lab-teaser:hover img:nth-child(3) { transform: rotate(-1deg) translateY(-8px); }
+}
+.juanto-lab-teaser:focus-visible img:nth-child(1) { transform: rotate(-14deg) translateX(-48px); }
+.juanto-lab-teaser:focus-visible img:nth-child(2) { transform: rotate(10deg) translateX(46px); }
+.juanto-lab-teaser:focus-visible img:nth-child(3) { transform: rotate(-1deg) translateY(-8px); }
+.juanto-lab-teaser__text { display: grid; gap: 8px; justify-items: start; }
+.juanto-lab-teaser__title { font-size: 26px; font-weight: 800; letter-spacing: -0.025em; }
+.juanto-lab-teaser__desc { font-size: 14.5px; color: var(--wp--preset--color--ink-2); max-width: 44ch; }
+
+@media (max-width: 760px) {
+	.juanto-lab-teaser { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+	.juanto-lab-teaser__fan img { transition: none; }
+}

@@ -1,0 +1,1 @@
+(()=>{"use strict";const t=window.wp.blocks,i=JSON.parse('{"UU":"juanto/status-bar"}'),n=window.wp.blockEditor,s=window.wp.i18n,o=window.ReactJSXRuntime;(0,t.registerBlockType)(i.UU,{edit:function(){return(0,o.jsx)("div",{...(0,n.useBlockProps)({className:"juanto-status is-editing"}),children:(0,s.__)("Now building: edit it in Settings → juanto.","juanto")})},save:()=>null})})();

@@ -1,0 +1,4 @@
+/* Tutorial call to action (juanto/tutorial-cta) */
+.juanto-tut-cta { display: flex; flex-wrap: wrap; gap: 16px 24px; align-items: center; justify-content: space-between; margin-top: 88px; padding: 28px 32px; background: var(--wp--preset--color--card); border-radius: 12px; }
+.juanto-tut-cta__text { margin: 0; max-width: 46ch; font-size: var(--wp--preset--font-size--lede); font-weight: 700; line-height: 1.3; }
+.juanto-tut-cta__links { display: flex; flex-wrap: wrap; gap: 10px; }

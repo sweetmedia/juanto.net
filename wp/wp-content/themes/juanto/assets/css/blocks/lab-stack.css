@@ -1,0 +1,57 @@
+/* Lab stack: pile of prints plus the "all" grid (juanto/lab-stack) */
+.juanto-lab { position: relative; margin-top: 8px; }
+.juanto-lab button { font: 500 12px/1 var(--wp--preset--font-family--mono); color: var(--wp--preset--color--ink-2); background: transparent; border: 1px solid var(--wp--preset--color--rule); border-radius: 999px; padding: 10px 14px; cursor: pointer; transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease, transform 160ms var(--juanto-ease-out); }
+.juanto-lab button:active { transform: scale(0.97); }
+.juanto-lab button[aria-pressed="true"] { background: var(--wp--preset--color--ink); color: var(--wp--preset--color--paper); border-color: var(--wp--preset--color--ink); }
+@media (hover: hover) and (pointer: fine) { .juanto-lab button:hover:not([aria-pressed="true"]) { border-color: var(--wp--preset--color--ink-3); color: var(--wp--preset--color--ink); } }
+.juanto-lab__views { position: absolute; right: 0; top: -58px; display: flex; gap: 6px; }
+
+/* Frames shared by prints and tiles */
+.juanto-lab .juanto-frame { aspect-ratio: 1; }
+.juanto-lab .juanto-frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; -webkit-user-drag: none; user-select: none; }
+.juanto-lab .juanto-frame.is-contain img { object-fit: contain; padding: 11%; }
+.juanto-lab .juanto-frame.is-note { display: flex; flex-direction: column; justify-content: space-between; padding: 11%; background: var(--wp--preset--color--amber-soft); }
+.juanto-lab .juanto-frame.is-note b { font-size: clamp(22px, 2.6vw, 34px); letter-spacing: -0.03em; line-height: 1.05; }
+.juanto-lab .juanto-frame.is-note p { margin: 0; font-size: clamp(13px, 1.25vw, 16px); line-height: 1.55; color: oklch(38% 0.03 70); }
+
+/* Stage */
+.juanto-lab__stage { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(250px, .55fr); align-items: center; }
+.juanto-lab__stage[hidden], .juanto-lab__all[hidden], .juanto-lab__views[hidden] { display: none; }
+.juanto-lab__pile { position: relative; height: clamp(520px, 52vw, 680px); touch-action: pan-y; }
+.juanto-print { position: absolute; left: 50%; top: 50%; width: clamp(300px, 36vw, 500px); will-change: transform; transition: transform 340ms var(--juanto-ease-out), opacity 240ms ease; user-select: none; }
+.juanto-print.is-top { cursor: grab; }
+.juanto-print.is-grab { cursor: grabbing; transition: none; }
+.juanto-lab__info { padding: 24px 12px 24px 4px; }
+.juanto-lab__count b { color: var(--wp--preset--color--ink); font-weight: 500; }
+.juanto-lab__name { margin-top: 12px; font-size: clamp(30px, 3.4vw, 44px); font-weight: 800; letter-spacing: -0.035em; line-height: 1.04; }
+.juanto-lab__meta { margin-top: 10px; }
+.juanto-lab__swap { transition: opacity 160ms ease, filter 160ms ease; }
+.juanto-lab__swap.is-out { opacity: 0; filter: blur(2px); }
+.juanto-lab__nav { display: flex; gap: 6px; margin-top: 24px; }
+.juanto-lab__hint { margin-top: 18px; }
+
+/* All (grid): the only view without JS */
+.juanto-lab__all { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 30px 24px; padding: 8px 0 36px; }
+.juanto-lab .juanto-tile { all: unset; display: grid; gap: 10px; cursor: pointer; border-radius: 8px; }
+.juanto-lab .juanto-tile:focus-visible { outline: 2px solid var(--wp--preset--color--amber); outline-offset: 4px; }
+.juanto-lab .juanto-tile .juanto-frame { transition: transform 200ms var(--juanto-ease-out); }
+@media (hover: hover) and (pointer: fine) { .juanto-lab .juanto-tile:hover .juanto-frame { transform: translateY(-4px); } }
+.juanto-lab .juanto-tile:focus-visible .juanto-frame { transform: translateY(-4px); }
+.juanto-lab .juanto-tile b { font-size: 14px; }
+.juanto-lab:not(.is-ready) .juanto-tile { cursor: default; }
+
+@media (max-width: 760px) {
+	.juanto-lab__views { position: static; margin-bottom: 16px; }
+	.juanto-lab__stage { grid-template-columns: 1fr; }
+	.juanto-lab__pile { height: 118vw; }
+	.juanto-print { width: 78vw; }
+}
+@media (prefers-reduced-motion: reduce) {
+	.juanto-print, .juanto-lab__swap, .juanto-lab .juanto-tile .juanto-frame { transition: none; }
+	/* Drop the transform leg of the transition explicitly (rather than
+	   relying on :active's transform: none making it a no-op): keeps the
+	   allowed color-only transitions (background-color/color/border-color,
+	   <= 200ms) working for hover/pressed/current states. */
+	.juanto-lab button { transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease; }
+	.juanto-lab button:active { transform: none; }
+}

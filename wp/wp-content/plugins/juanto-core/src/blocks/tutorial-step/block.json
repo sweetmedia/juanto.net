@@ -1,0 +1,14 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "juanto/tutorial-step",
+	"title": "Tutorial step",
+	"category": "text",
+	"description": "One numbered tutorial step. The number follows the step's position.",
+	"textdomain": "juanto",
+	"attributes": { "title": { "type": "string", "default": "" } },
+	"usesContext": [ "postId" ],
+	"supports": { "html": false },
+	"editorScript": "file:./index.js",
+	"render": "file:./render.php"
+}

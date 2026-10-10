@@ -1,0 +1,7 @@
+/* Callout (juanto/callout). No side stripes (DESIGN.md): a tint or a hairline only. */
+.juanto-callout { margin: 0; padding: 14px 18px; background: var(--wp--preset--color--card); border: 1px solid var(--wp--preset--color--rule); border-radius: 10px; }
+.juanto-callout.is-tip { background: var(--wp--preset--color--amber-soft); border-color: var(--wp--preset--color--amber-soft); }
+.juanto-callout__label { display: flex; gap: 6px; align-items: center; margin: 0 0 4px; font: 500 var(--wp--preset--font-size--label)/1.5 var(--wp--preset--font-family--mono); text-transform: lowercase; color: var(--wp--preset--color--ink); }
+.juanto-callout__icon { color: var(--wp--preset--color--alert-red); flex: none; }
+.juanto-callout__body > * { margin-block: 0; }
+.juanto-callout__body > * + * { margin-top: 10px; }

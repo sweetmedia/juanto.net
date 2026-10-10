@@ -1,0 +1,1 @@
+(()=>{"use strict";const e=window.wp.blocks,o=JSON.parse('{"UU":"juanto/next-case"}'),t=window.wp.blockEditor,n=window.wp.i18n,a=window.ReactJSXRuntime;(0,e.registerBlockType)(o.UU,{edit:function(){return(0,a.jsx)("p",{...(0,t.useBlockProps)({className:"juanto-label"}),children:(0,n.__)("Next case: picked automatically by order.","juanto")})},save:()=>null})})();

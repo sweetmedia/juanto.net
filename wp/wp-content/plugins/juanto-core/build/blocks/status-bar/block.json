@@ -1,0 +1,16 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "juanto/status-bar",
+  "title": "Now building",
+  "category": "text",
+  "description": "Live \"now building\" status bar: project, milestones and last commit.",
+  "textdomain": "juanto",
+  "attributes": {},
+  "supports": {
+    "html": false,
+    "multiple": false
+  },
+  "editorScript": "file:./index.js",
+  "render": "file:./render.php"
+}
