@@ -83,6 +83,10 @@ body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; 
 .screen-reader-text { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
 
 .juanto-code { position: relative; }
+/* The code box itself (direction C): ink box, paper text. Imported posts carry old palette classes (has-base-2-background-color) this theme does not define, so the box is set here. */
+.juanto-code > .wp-block-code { margin: 0; padding: 18px 20px; overflow-x: auto; font: 400 14px/1.6 var(--wp--preset--font-family--mono); color: var(--wp--preset--color--paper); background: var(--wp--preset--color--ink); border: 0; border-radius: 8px; white-space: pre; }
+.juanto-code > .wp-block-code code { font: inherit; color: inherit; background: none; padding: 0; }
+.juanto-code:not(.has-file) > .wp-block-code { padding-right: 84px; }
 .juanto-code__file { display: inline-block; margin: 0; padding: 6px 12px; font: 500 var(--wp--preset--font-size--label)/1.5 var(--wp--preset--font-family--mono); color: var(--wp--preset--color--ink-2); background: var(--wp--preset--color--card); border: 1px solid var(--wp--preset--color--rule); border-bottom: 0; border-radius: 8px 8px 0 0; }
 .juanto-code.has-file > .wp-block-code { margin-top: 0; border-top-left-radius: 0; }
 .juanto-code__copy { position: absolute; top: 8px; right: 8px; padding: 4px 10px; font: 500 var(--wp--preset--font-size--label)/1.5 var(--wp--preset--font-family--mono); color: var(--wp--preset--color--ink); background: var(--wp--preset--color--paper); border: 1px solid var(--wp--preset--color--rule); border-radius: 6px; cursor: pointer; }
