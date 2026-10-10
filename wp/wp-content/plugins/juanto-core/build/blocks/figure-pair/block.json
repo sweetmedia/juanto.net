@@ -1,0 +1,23 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "juanto/figure-pair",
+  "title": "Figure pair",
+  "category": "text",
+  "description": "Two side-by-side figures with a bold lead and caption.",
+  "textdomain": "juanto",
+  "attributes": {
+    "items": {
+      "type": "array",
+      "default": [
+        {},
+        {}
+      ]
+    }
+  },
+  "supports": {
+    "html": false
+  },
+  "editorScript": "file:./index.js",
+  "render": "file:./render.php"
+}

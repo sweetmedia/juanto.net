@@ -1,0 +1,23 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "juanto/case-meta",
+  "title": "Case study header",
+  "category": "text",
+  "description": "Number, title, lede and facts from the project fields.",
+  "textdomain": "juanto",
+  "attributes": {
+    "lede": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "usesContext": [
+    "postId"
+  ],
+  "supports": {
+    "html": false
+  },
+  "editorScript": "file:./index.js",
+  "render": "file:./render.php"
+}

@@ -1,0 +1,13 @@
+/* Case study table of contents (juanto/case-toc) */
+.juanto-toc { position: sticky; top: calc(var(--juanto-bar) + 84px); align-self: start; display: grid; gap: 2px; font-size: 13px; }
+.juanto-toc a { display: grid; grid-template-columns: 26px 1fr; padding: 7px 0; color: var(--wp--preset--color--ink-3); transition: color 150ms ease; }
+.juanto-toc a span { font: 500 11px/1.7 var(--wp--preset--font-family--mono); }
+.juanto-toc a.is-active { color: var(--wp--preset--color--ink); font-weight: 500; }
+.juanto-toc a.is-active span { color: var(--wp--preset--color--amber); }
+
+@media (max-width: 860px) {
+	.juanto-toc { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+	.juanto-toc a { transition: none; }
+}

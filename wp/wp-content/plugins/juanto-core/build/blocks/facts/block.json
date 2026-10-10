@@ -1,0 +1,20 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "juanto/facts",
+  "title": "Facts",
+  "category": "text",
+  "description": "Label and value rows.",
+  "textdomain": "juanto",
+  "attributes": {
+    "rows": {
+      "type": "array",
+      "default": []
+    }
+  },
+  "supports": {
+    "html": false
+  },
+  "editorScript": "file:./index.js",
+  "render": "file:./render.php"
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "juanto/tldr",
+  "title": "TL;DR",
+  "category": "text",
+  "description": "Problem, what I did, outcome.",
+  "textdomain": "juanto",
+  "attributes": {
+    "problem": {
+      "type": "string",
+      "default": ""
+    },
+    "did": {
+      "type": "string",
+      "default": ""
+    },
+    "outcome": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "supports": {
+    "html": false
+  },
+  "editorScript": "file:./index.js",
+  "render": "file:./render.php"
+}

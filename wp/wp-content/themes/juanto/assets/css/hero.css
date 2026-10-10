@@ -1,0 +1,49 @@
+/* Hero: photo is the ground; name sits on the lit wall. Per-block rules
+   (project list rows, lab teaser) live in assets/css/blocks/<name>.css so
+   they load wherever those blocks are used, not just on the front page. */
+.juanto-hero { position: sticky; top: var(--juanto-bar); z-index: 1; height: min(calc(100svh - var(--juanto-bar)), 820px); min-height: 600px; overflow: hidden; background: var(--wp--preset--color--wall); margin-block: 0; }
+.juanto-hero__photo img { position: absolute; right: 0; top: 0; height: 100%; width: auto; aspect-ratio: 1; object-fit: cover;
+	-webkit-mask-image: linear-gradient(90deg, transparent 0%, oklch(0% 0 0) 30%); mask-image: linear-gradient(90deg, transparent 0%, oklch(0% 0 0) 30%);
+	animation: juanto-settle 1.6s var(--juanto-ease-out) both; }
+/* transform only: the photo is a plausible LCP candidate, and an opacity
+   0->1 start would delay its paint until the animation progresses. */
+@keyframes juanto-settle { from { transform: scale(1.06); } to { transform: none; } }
+.juanto-hero__nav { position: absolute; top: 24px; left: clamp(20px, 4vw, 40px); right: clamp(20px, 4vw, 40px); z-index: 2; display: flex; align-items: center; gap: 24px; }
+.juanto-hero__links { display: flex; gap: 22px; margin-left: auto; padding: 8px 14px; border-radius: 999px; background: oklch(97% 0.006 75 / .72); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); color: var(--wp--preset--color--ink); font-size: 13px; }
+.juanto-hero__links [aria-current] { font-weight: 700; }
+.juanto-hero__copy { position: absolute; left: clamp(20px, 4vw, 40px); bottom: 190px; z-index: 2; max-width: 440px; }
+.juanto-hero__copy > * { margin: 0; animation: juanto-rise 900ms var(--juanto-ease-out) both; }
+.juanto-hero__copy > :nth-child(2) { animation-delay: 60ms; } .juanto-hero__copy > :nth-child(3) { animation-delay: 120ms; } .juanto-hero__copy > :nth-child(4) { animation-delay: 180ms; } .juanto-hero__copy > :nth-child(5) { animation-delay: 240ms; }
+/* Motion only, no opacity dip: the copy would otherwise sit at reduced contrast for the
+   first ~900ms of every load, which is a real (if brief) legibility problem, not just a
+   test-timing artifact. */
+@keyframes juanto-rise { from { transform: translateY(12px); } to { transform: none; } }
+.juanto-hero__name { font-size: clamp(3.2rem, 6.5vw, 4.75rem); font-weight: 800; letter-spacing: -0.045em; line-height: .95; }
+.juanto-hero__role { margin-top: 12px; font-size: 24px; font-weight: 500; }
+.juanto-hero__role span { color: var(--wp--preset--color--amber); }
+/* Below 1300px the photo's bounding box can reach under the copy column, so the two lighter (ink-2)
+   lines get an opaque-enough scrim to stay legible over whatever the photo is doing there. */
+.juanto-hero__bio { margin-top: 16px; font-size: 16px; line-height: 1.6; color: var(--wp--preset--color--ink-2); max-width: 34ch; width: fit-content; background: oklch(97% 0.006 75 / .88); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-radius: 8px; padding: 6px 10px; margin-left: -10px; }
+.juanto-hero__avail { display: flex; align-items: center; gap: 9px; margin-top: 18px; color: var(--wp--preset--color--ink-2); width: fit-content; background: oklch(97% 0.006 75 / .88); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-radius: 999px; padding: 5px 12px 5px 10px; margin-left: -10px; }
+.juanto-hero__avail i { width: 7px; height: 7px; border-radius: 50%; background: var(--wp--preset--color--status-green); }
+.juanto-hero__btns { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+
+/* The sheet slides up over the photo like a page on a desk. */
+.juanto-sheet { position: relative; z-index: 5; margin-top: -150px !important; background: var(--wp--preset--color--paper); border-radius: 22px 22px 0 0; box-shadow: 0 -18px 40px -24px oklch(25% 0.03 60 / .45); padding-top: 4px; }
+
+/* Lists: the shared heading chrome (.juanto-list, .juanto-list__head) lives
+   in base.css since project-list and lab-teaser both use it. */
+.juanto-sheet > .juanto-list:first-child { margin-top: 24px; }
+
+/* Phones: photo on top, text below; lists single column; no hover previews. */
+@media (max-width: 760px) {
+	.juanto-hero { height: auto; min-height: 0; display: grid; }
+	.juanto-hero__photo img { position: relative; width: 100%; height: 62svh; mask-image: none; -webkit-mask-image: none; object-position: 62% 30%; }
+	.juanto-hero__copy { position: relative; left: auto; bottom: auto; padding: 24px 20px 180px; }
+	/* The photo doesn't underlap the copy in the stacked mobile layout, so the desktop scrim is not needed. */
+	.juanto-hero__bio, .juanto-hero__avail { background: none; backdrop-filter: none; -webkit-backdrop-filter: none; padding: 0; margin-left: 0; }
+	.juanto-hero__links { gap: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+	.juanto-hero__photo img, .juanto-hero__copy > * { animation: none; }
+}

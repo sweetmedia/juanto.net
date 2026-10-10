@@ -1,0 +1,1 @@
+(()=>{"use strict";const n=window.wp.blocks,e=JSON.parse('{"UU":"juanto/lang-badge"}'),o=window.wp.blockEditor,a=window.wp.i18n,s=window.ReactJSXRuntime;(0,n.registerBlockType)(e.UU,{edit:function(){return(0,s.jsx)("span",{...(0,o.useBlockProps)({className:"juanto-lang-badge"}),children:(0,a.__)("EN","juanto")})},save:()=>null})})();

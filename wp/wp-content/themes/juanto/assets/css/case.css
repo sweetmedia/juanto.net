@@ -1,0 +1,17 @@
+/* Case template layout: sticky contents column + flowing block content.
+   Per-block rules live in assets/css/blocks/<name>.css so they load
+   wherever a block is used (including blog posts), not just here. */
+.juanto-case__body { display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 56px; padding-top: 48px; }
+.juanto-case__content > * + * { margin-top: 28px; }
+.juanto-case__content > p { max-width: 64ch; font-size: 17px; line-height: 1.65; color: var(--wp--preset--color--ink-2); }
+.juanto-case__content > p strong { color: var(--wp--preset--color--ink); font-weight: 600; }
+
+/* Diagram: manually authored SVG in case study content, not a block. */
+.juanto-diagram { background: var(--wp--preset--color--card); border: 1px solid var(--wp--preset--color--rule); border-radius: 12px; padding: 20px; overflow-x: auto; }
+.juanto-diagram svg { display: block; width: 100%; min-width: 760px; height: auto; }
+
+.juanto-back { margin-top: 56px; }
+
+@media (max-width: 860px) {
+	.juanto-case__body { grid-template-columns: 1fr; gap: 28px; }
+}

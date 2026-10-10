@@ -1,0 +1,27 @@
+<!-- wp:juanto/status-bar /-->
+<!-- wp:pattern {"slug":"juanto/hero"} /-->
+<!-- wp:group {"tagName":"main","className":"juanto-sheet","layout":{"type":"constrained","contentSize":"1200px"}} -->
+<main class="wp-block-group juanto-sheet">
+<!-- wp:juanto/project-list {"tier":"case","layout":"rows","label":"selected work"} /-->
+<!-- wp:juanto/project-list {"tier":"card","layout":"columns","label":"more projects"} /-->
+<!-- wp:juanto/lab-teaser /-->
+<!-- wp:group {"tagName":"section","className":"juanto-list is-writing","layout":{"type":"default"}} -->
+<section class="wp-block-group juanto-list is-writing">
+<!-- wp:html --><header class="juanto-list__head juanto-label"><span>writing</span><span class="juanto-list__aside">en · es</span></header><!-- /wp:html -->
+<!-- wp:query {"queryId":2,"query":{"perPage":3,"postType":"post","order":"desc","orderBy":"date","inherit":false}} -->
+<div class="wp-block-query">
+<!-- wp:post-template -->
+<!-- wp:group {"className":"juanto-post-row","layout":{"type":"flex","justifyContent":"space-between","flexWrap":"nowrap"}} -->
+<div class="wp-block-group juanto-post-row">
+<!-- wp:post-title {"isLink":true,"level":3,"fontSize":"body"} /-->
+<!-- wp:juanto/lang-badge /-->
+</div>
+<!-- /wp:group -->
+<!-- /wp:post-template -->
+</div>
+<!-- /wp:query -->
+</section>
+<!-- /wp:group -->
+<!-- wp:pattern {"slug":"juanto/footer-contact"} /-->
+</main>
+<!-- /wp:group -->

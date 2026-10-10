@@ -1,0 +1,1 @@
+(()=>{"use strict";const o=window.wp.blocks,t=JSON.parse('{"UU":"juanto/case-toc"}'),n=window.wp.blockEditor,e=window.wp.i18n,i=window.ReactJSXRuntime;(0,o.registerBlockType)(t.UU,{edit:function(){return(0,i.jsx)("nav",{...(0,n.useBlockProps)({className:"juanto-toc is-editing"}),children:(0,e.__)("Contents: built from the Section head blocks.","juanto")})},save:()=>null})})();

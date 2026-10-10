@@ -1,0 +1,9 @@
+/* Facts (juanto/facts) */
+.juanto-facts { margin: 0; max-width: 64ch; border-top: 1px solid var(--wp--preset--color--rule); }
+.juanto-facts div { display: grid; grid-template-columns: 170px 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--wp--preset--color--rule); font-size: 14.5px; }
+.juanto-facts dt { font: 500 12px/1.6 var(--wp--preset--font-family--mono); color: var(--wp--preset--color--ink-3); }
+.juanto-facts dd { margin: 0; }
+
+@media (max-width: 860px) {
+	.juanto-facts div { grid-template-columns: 1fr; gap: 4px; }
+}

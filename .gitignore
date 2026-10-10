@@ -8,6 +8,8 @@
 !/composer.lock
 !/phpcs.xml.dist
 !/phpunit.xml.dist
+!/index.php
+!/.htaccess.dist
 !/tests/
 /tests/wp-tests-config.php
 !/wp/

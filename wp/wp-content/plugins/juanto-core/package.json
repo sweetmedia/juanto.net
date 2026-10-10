@@ -1,0 +1,26 @@
+{
+  "name": "juanto-core",
+  "private": true,
+  "license": "GPL-2.0-or-later",
+  "scripts": {
+    "build": "npm run build:blocks && npm run build:editor",
+    "build:blocks": "wp-scripts build --webpack-src-dir=src/blocks --output-path=build/blocks --webpack-copy-php",
+    "build:editor": "wp-scripts build index.js --webpack-src-dir=src/editor --output-path=build/editor",
+    "start": "wp-scripts start --webpack-src-dir=src/blocks --output-path=build/blocks --webpack-copy-php",
+    "test": "wp-scripts test-unit-js src/lib",
+    "lint:js": "wp-scripts lint-js src"
+  },
+  "devDependencies": {
+    "@wordpress/block-editor": "^17.1.0",
+    "@wordpress/blocks": "^16.0.0",
+    "@wordpress/components": "^40.1.0",
+    "@wordpress/core-data": "^8.0.0",
+    "@wordpress/data": "^10.55.0",
+    "@wordpress/editor": "^15.0.0",
+    "@wordpress/element": "^8.7.0",
+    "@wordpress/i18n": "^6.28.0",
+    "@wordpress/plugins": "^7.55.0",
+    "@wordpress/scripts": "^35.0.0",
+    "@wordpress/server-side-render": "^6.31.0"
+  }
+}

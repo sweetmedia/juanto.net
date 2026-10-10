@@ -1,0 +1,18 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "juanto/next-case",
+  "title": "Next case",
+  "category": "text",
+  "description": "Link to the next case study in order.",
+  "textdomain": "juanto",
+  "attributes": {},
+  "usesContext": [
+    "postId"
+  ],
+  "supports": {
+    "html": false
+  },
+  "editorScript": "file:./index.js",
+  "render": "file:./render.php"
+}

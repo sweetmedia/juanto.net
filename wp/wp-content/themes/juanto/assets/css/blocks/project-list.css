@@ -1,0 +1,35 @@
+/* Project list: homepage rows or two-column cards (juanto/project-list) */
+.juanto-row { display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; gap: 18px; align-items: baseline; padding: 22px 6px; border-bottom: 1px solid var(--wp--preset--color--rule); transition: opacity 200ms ease; }
+.juanto-row__n { font: 500 12px/1 var(--wp--preset--font-family--mono); color: var(--wp--preset--color--ink-3); }
+.juanto-row__main { display: grid; gap: 6px; }
+.juanto-row__title { font-size: 28px; font-weight: 700; letter-spacing: -0.025em; line-height: 1.15; transition: transform 200ms var(--juanto-ease-out); }
+.juanto-row__summary { font-size: 15px; color: var(--wp--preset--color--ink-2); }
+.juanto-row__tags { text-align: right; line-height: 1.7; }
+@media (hover: hover) and (pointer: fine) {
+	.juanto-rows:hover .juanto-row:not(:hover) { opacity: .4; }
+	.juanto-row:hover .juanto-row__title { transform: translateX(6px); }
+}
+.juanto-rows:focus-within .juanto-row:not(:focus-visible) { opacity: .4; }
+.juanto-row:focus-visible .juanto-row__title { transform: translateX(6px); }
+.juanto-preview { position: absolute; left: 0; top: 0; width: 340px; pointer-events: none; opacity: 0; z-index: 10; will-change: transform; transition: opacity 180ms ease; }
+.juanto-preview.is-on { opacity: 1; }
+.juanto-preview__box { position: relative; aspect-ratio: 4 / 3; border-radius: 8px; overflow: hidden; background: var(--wp--preset--color--card); box-shadow: var(--juanto-shadow-object); transform: scale(.94); transition: transform 220ms var(--juanto-ease-out); }
+.juanto-preview.is-on .juanto-preview__box { transform: none; }
+.juanto-preview img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; opacity: 0; filter: blur(3px); transition: opacity 200ms ease, filter 200ms ease; }
+.juanto-preview img.is-on { opacity: 1; filter: none; }
+
+.juanto-more { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 40px; }
+.juanto-more-item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 16px; padding: 16px 2px; border-bottom: 1px solid var(--wp--preset--color--rule); }
+.juanto-more-item b { font-size: 16px; }
+.juanto-more-item span { grid-column: 1; font-size: 13px; color: var(--wp--preset--color--ink-2); }
+.juanto-more-item em { grid-row: 1; grid-column: 2; font-style: normal; }
+
+@media (max-width: 760px) {
+	.juanto-row { grid-template-columns: 28px minmax(0, 1fr); }
+	.juanto-row__tags { grid-column: 2; text-align: left; }
+	.juanto-row__title { font-size: 22px; }
+	.juanto-more { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+	.juanto-row, .juanto-row__title, .juanto-preview__box { transition: none; }
+}

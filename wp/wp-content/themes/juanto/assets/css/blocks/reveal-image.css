@@ -1,0 +1,10 @@
+/* Reveal image (juanto/reveal-image) */
+.juanto-reveal { margin: 0; }
+.juanto-reveal figcaption { margin-top: 12px; font-size: 13.5px; line-height: 1.5; color: var(--wp--preset--color--ink-2); }
+.juanto-reveal figcaption b { color: var(--wp--preset--color--ink); }
+.juanto-reveal[data-armed] .juanto-frame { clip-path: inset(0 0 100% 0); transition: clip-path 1.1s var(--juanto-ease-reveal); }
+.juanto-reveal[data-armed].is-in .juanto-frame { clip-path: inset(0 0 0 0); }
+
+@media (prefers-reduced-motion: reduce) {
+	.juanto-reveal[data-armed] .juanto-frame { clip-path: none; transition: none; }
+}

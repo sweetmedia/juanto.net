@@ -1,0 +1,6 @@
+/* Decisions (juanto/decisions) */
+.juanto-decisions { list-style: none; margin: 0; padding: 0; max-width: 72ch; border-top: 1px solid var(--wp--preset--color--rule); counter-reset: d; }
+.juanto-decisions li { display: grid; grid-template-columns: 44px 1fr; column-gap: 12px; padding: 18px 0; border-bottom: 1px solid var(--wp--preset--color--rule); }
+.juanto-decisions li::before { counter-increment: d; content: counter(d, decimal-leading-zero); grid-row: span 2; font: 500 12px/1.6 var(--wp--preset--font-family--mono); color: var(--wp--preset--color--amber); }
+.juanto-decisions b { font-size: 16.5px; }
+.juanto-decisions p { grid-column: 2; margin: 4px 0 0; font-size: 15px; line-height: 1.6; color: var(--wp--preset--color--ink-2); }

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "juanto/case-toc",
+  "title": "Case study contents",
+  "category": "text",
+  "description": "Table of contents built from the case study's Section head blocks.",
+  "textdomain": "juanto",
+  "attributes": {},
+  "usesContext": [
+    "postId"
+  ],
+  "supports": {
+    "html": false
+  },
+  "editorScript": "file:./index.js",
+  "viewScript": "file:./view.js",
+  "render": "file:./render.php"
+}

@@ -1,0 +1,9 @@
+/* Lab archive template. Per-block rules live in assets/css/blocks/<name>.css
+   so they load wherever a block is used, not just here. */
+.juanto-lab-page { padding-top: 40px; }
+.juanto-lab-page h1 { margin: 0; font-size: clamp(3rem, 6vw, 3.5rem); }
+/* WP's constrained-layout support forces margin-left/right:auto (!important) on every
+   unaligned child of the constrained main; that only visibly centers this paragraph
+   because it (unlike the full-width h1) has its own restrictive max-width. Override
+   back to flush-left so it sits under the h1's left edge. */
+.juanto-lab-page__intro { max-width: 52ch; margin-top: 12px; margin-left: 0 !important; margin-right: 0 !important; color: var(--wp--preset--color--ink-2); }
