@@ -7,3 +7,6 @@
 @media (max-width: 860px) {
 	.juanto-figure-pair { grid-template-columns: 1fr; }
 }
+
+/* Editor preview: keep the picked images inside the canvas (the front end sizes them through .juanto-frame). */
+.juanto-figure-pair.is-editing img { display: block; max-width: 100%; height: auto; }

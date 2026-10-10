@@ -8,3 +8,6 @@
 @media (prefers-reduced-motion: reduce) {
 	.juanto-reveal[data-armed] .juanto-frame { clip-path: none; transition: none; }
 }
+
+/* Editor preview: keep the picked image inside the canvas (the front end sizes it through .juanto-frame). */
+.juanto-reveal.is-editing img { display: block; max-width: 100%; height: auto; }
