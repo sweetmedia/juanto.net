@@ -15,11 +15,10 @@ if ( ! $image_id || ! wp_attachment_is_image( $image_id ) ) {
 	<div class="juanto-frame">
 	<?php
 	/**
-	 * No forced loading="lazy" here: a case study's lead reveal image is
-	 * typically its LCP candidate, so this defers to core's own
-	 * first-few-content-images-are-eager default (wp_get_loading_attr_default()).
+	 * The lead reveal image is typically the case's LCP candidate, so it keeps
+	 * core's defaults; every later one is lazy (see media.php).
 	 */
-	echo wp_get_attachment_image( $image_id, $attributes['size'] ?? 'large' );
+	echo wp_get_attachment_image( $image_id, $attributes['size'] ?? 'large', false, juanto_reveal_image_loading_attrs() );
 	?>
 	</div>
 	<?php

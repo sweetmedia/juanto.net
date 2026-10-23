@@ -90,6 +90,7 @@ class BlocksTest extends WP_UnitTestCase {
 		// not reset between tests by WP_UnitTestCase; zero it so this test doesn't
 		// depend on how many images earlier tests in the run already rendered.
 		wp_increase_content_media_count( -wp_increase_content_media_count( 0 ) );
+		juanto_reveal_image_loading_attrs( true );
 
 		// A case study's lead reveal image is typically its LCP candidate; forcing
 		// loading="lazy" on it (as opposed to leaving it to core's own
@@ -105,6 +106,36 @@ class BlocksTest extends WP_UnitTestCase {
 		$html = ob_get_clean();
 
 		$this->assertStringNotContainsString( 'loading="lazy"', $html, 'the lead (likely LCP) image must not be lazy-loaded' );
+	}
+
+	public function test_only_the_lead_case_image_is_eager_the_rest_are_lazy() {
+		wp_increase_content_media_count( -wp_increase_content_media_count( 0 ) );
+		juanto_reveal_image_loading_attrs( true );
+
+		// Core does not lazy-load images a dynamic block renders; on a case study that
+		// means below-the-fold screenshots download at load and compete with the fonts.
+		$block = '<!-- wp:juanto/reveal-image {"id":' . $this->image() . '} /-->';
+		$id    = self::factory()->post->create( [ 'post_type' => 'project', 'post_content' => $block . $block . $block ] );
+		$this->go_to( get_permalink( $id ) );
+		the_post();
+		ob_start();
+		the_content();
+		$imgs = preg_match_all( '#<img [^>]*>#', ob_get_clean(), $m ) ? $m[0] : [];
+
+		$this->assertCount( 3, $imgs );
+		$this->assertStringNotContainsString( 'loading="lazy"', $imgs[0], 'the lead image stays eager' );
+		$this->assertStringContainsString( 'loading="lazy"', $imgs[1] );
+		$this->assertStringContainsString( 'loading="lazy"', $imgs[2] );
+	}
+
+	public function test_case_pages_also_preload_the_lede_font() {
+		$this->go_to( '/' );
+		$this->assertSame( [ 'schibsted-grotesk-400', 'schibsted-grotesk-800' ], juanto_preload_fonts() );
+
+		// The case lede is set in weight 500 and is often the LCP text; without the
+		// preload the browser only finds that font after parsing case-meta.css.
+		$this->go_to( get_permalink( $this->case_project( 'Embajada', 2 ) ) );
+		$this->assertSame( [ 'schibsted-grotesk-400', 'schibsted-grotesk-800', 'schibsted-grotesk-500' ], juanto_preload_fonts() );
 	}
 
 	public function test_case_meta_renders_number_title_and_fields() {
