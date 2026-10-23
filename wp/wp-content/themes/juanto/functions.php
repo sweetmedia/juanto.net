@@ -123,10 +123,25 @@ add_filter(
 	}
 );
 
+/**
+ * Font files to preload on this request. Case studies add weight 500: the case
+ * lede is set in it and is often the LCP text, and the browser would only find
+ * that file after parsing case-meta.css.
+ *
+ * @return string[] File names in assets/fonts/, without the .woff2 extension.
+ */
+function juanto_preload_fonts(): array {
+	$fonts = [ 'schibsted-grotesk-400', 'schibsted-grotesk-800' ];
+	if ( is_singular( 'project' ) && function_exists( 'juanto_project_tier' ) && 'case' === juanto_project_tier( (int) get_queried_object_id() ) ) {
+		$fonts[] = 'schibsted-grotesk-500';
+	}
+	return $fonts;
+}
+
 add_action(
 	'wp_head',
 	static function () {
-		foreach ( [ 'schibsted-grotesk-400', 'schibsted-grotesk-800' ] as $font ) {
+		foreach ( juanto_preload_fonts() as $font ) {
 			printf( '<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin>' . "\n", esc_url( get_theme_file_uri( "assets/fonts/{$font}.woff2" ) ) );
 		}
 	},

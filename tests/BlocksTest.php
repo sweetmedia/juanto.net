@@ -128,6 +128,16 @@ class BlocksTest extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'loading="lazy"', $imgs[2] );
 	}
 
+	public function test_case_pages_also_preload_the_lede_font() {
+		$this->go_to( '/' );
+		$this->assertSame( [ 'schibsted-grotesk-400', 'schibsted-grotesk-800' ], juanto_preload_fonts() );
+
+		// The case lede is set in weight 500 and is often the LCP text; without the
+		// preload the browser only finds that font after parsing case-meta.css.
+		$this->go_to( get_permalink( $this->case_project( 'Embajada', 2 ) ) );
+		$this->assertSame( [ 'schibsted-grotesk-400', 'schibsted-grotesk-800', 'schibsted-grotesk-500' ], juanto_preload_fonts() );
+	}
+
 	public function test_case_meta_renders_number_title_and_fields() {
 		$this->case_project( 'Other', 0 );
 		$id = $this->case_project( 'NexConnect', 1 );
